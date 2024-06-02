@@ -38,11 +38,6 @@ public class TableEntity {
     public TableEntity() {
     }
 
-    
-
- 
-
-
     public TableEntity(int tableId, String tableName, DatabaseEntity database, UserEntity user, List<String> columns) {
         this.tableId = tableId;
         this.tableName = tableName;
@@ -50,11 +45,6 @@ public class TableEntity {
         this.user = user;
         this.columns = columns;
     }
-
-
-
-
-
 
     public int getTableId() {
         return tableId;

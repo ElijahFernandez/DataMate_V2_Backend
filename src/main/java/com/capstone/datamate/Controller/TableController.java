@@ -45,6 +45,4 @@ public class TableController {
     public List<Object[]> getTblData(@RequestParam String tblName) throws SQLException{
         return tserv.executeNativeQuery(tblName);
     }
-
-    
 }

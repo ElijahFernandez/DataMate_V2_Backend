@@ -1,14 +1,13 @@
 package com.capstone.datamate.Controller;
 
+import com.capstone.datamate.Entity.InsertValuesRequest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.capstone.datamate.Config.JdbcTemplateImpl;
 import com.capstone.datamate.Entity.SqlRequestEntity;
+
+import java.util.List;
 
 @CrossOrigin("http://localhost:3000/")
 @RestController
@@ -23,5 +22,15 @@ public class JDBCController {
     @PostMapping("/convert")
     public void executeSQL(@RequestBody SqlRequestEntity sql){
         jdbc.executeSQL(sql.getTblName(), sql.getVals(), sql.getOperation());
+    }
+
+    @GetMapping("/columns")
+    public List<String> getColumnHeaders(@RequestParam String tableName) {
+        return jdbc.getColumnHeaders(tableName);
+    }
+
+    @PostMapping("/insert")
+    public void insertValues(@RequestBody InsertValuesRequest request) {
+        jdbc.insertValues(request.getTableName(), request.getHeaders(), request.getValues());
     }
 }

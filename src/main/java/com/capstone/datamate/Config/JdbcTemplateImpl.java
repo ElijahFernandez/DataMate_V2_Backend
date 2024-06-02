@@ -7,6 +7,8 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 public class JdbcTemplateImpl{
     
@@ -41,7 +43,33 @@ public class JdbcTemplateImpl{
         if(!sqlStatement.equals("")){
             jdbc.execute(sqlStatement);
         }
-        
     }
-    
+    public List<String> getColumnHeaders(String tableName) {
+        String query = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = ?";
+        return jdbc.queryForList(query, new Object[]{tableName}, String.class);
+    }
+
+    public void insertValues(String tableName, List<String> headers, List<String> values) {
+        if (headers.size() != values.size()) {
+            throw new IllegalArgumentException("Number of headers and values must be equal.");
+        }
+
+        StringBuilder columnNames = new StringBuilder();
+        StringBuilder placeholders = new StringBuilder();
+
+        for (int i = 0; i < headers.size(); i++) {
+            columnNames.append(headers.get(i));
+            placeholders.append("?");
+
+            if (i < headers.size() - 1) {
+                columnNames.append(", ");
+                placeholders.append(", ");
+            }
+        }
+
+        String query = "INSERT INTO " + tableName + " (" + columnNames + ") VALUES (" + placeholders + ")";
+        Object[] valuesArray = values.toArray();
+
+        jdbc.update(query, valuesArray);
+    }
 }

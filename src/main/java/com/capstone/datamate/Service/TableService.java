@@ -46,6 +46,4 @@ public class TableService {
         String sql = "SELECT * FROM " + tableName;
         return entityManager.createNativeQuery(sql).getResultList();
     }
-
-
 }
