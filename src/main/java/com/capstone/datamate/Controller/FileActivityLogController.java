@@ -56,6 +56,4 @@ public class FileActivityLogController {
         List<FileActivityLogEntity> logs = logService.getFileActivityLogsByUserId(userId);
         return logs;
     }
-
-
 }

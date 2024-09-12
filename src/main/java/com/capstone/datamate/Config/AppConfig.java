@@ -3,6 +3,7 @@ package com.capstone.datamate.Config;
 import javax.sql.DataSource;
 
 import com.capstone.datamate.GeminiAPI.GeminiInterface;
+import com.capstone.datamate.OpenAI.OpenAIInterface;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -53,5 +54,23 @@ public class AppConfig {
         RestClientAdapter adapter = RestClientAdapter.create(client);
         HttpServiceProxyFactory factory = HttpServiceProxyFactory.builderFor(adapter).build();
         return factory.createClient(GeminiInterface.class);
+    }
+
+    @Bean
+    public RestClient openAIRestClient(@Value("${openai.api.url}") String baseUrl,
+                                       @Value("${openai.api.key}") String apiKey) {
+        return RestClient.builder()
+                .baseUrl(baseUrl)
+                .defaultHeader("Authorization", "Bearer " + apiKey)
+                .defaultHeader("Content-Type", "application/json")
+                .defaultHeader("Accept", "application/json")
+                .build();
+    }
+
+    @Bean
+    public OpenAIInterface openAIInterface(@Qualifier("openAIRestClient") RestClient client) {
+        RestClientAdapter adapter = RestClientAdapter.create(client);
+        HttpServiceProxyFactory factory = HttpServiceProxyFactory.builderFor(adapter).build();
+        return factory.createClient(OpenAIInterface.class);
     }
 }

@@ -1,8 +1,12 @@
 package com.capstone.datamate.Controller;
 
 import java.util.List;
+import java.util.Map;
 
+import com.capstone.datamate.Service.OpenAIService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,6 +26,12 @@ public class DatabaseController {
     
     @Autowired
     DatabaseService dbServ;
+
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
+
+    @Autowired
+    private OpenAIService openAIService;
 
     @PostMapping("/postDB")
     public DatabaseEntity postDB(@RequestBody DatabaseEntity db){
@@ -44,9 +54,9 @@ public class DatabaseController {
     }
     
 
-
     @DeleteMapping("/deleteDB")
     public String deleteDB(@RequestParam int dbId){
         return dbServ.deleteDB(dbId);
     }
+
 }

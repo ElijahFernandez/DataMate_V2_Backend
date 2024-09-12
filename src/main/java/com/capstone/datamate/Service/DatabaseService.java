@@ -1,8 +1,11 @@
 package com.capstone.datamate.Service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
 import com.capstone.datamate.Entity.DatabaseEntity;
@@ -11,7 +14,10 @@ import com.capstone.datamate.Repository.DatabaseRepository;
 
 @Service
 public class DatabaseService {
-    
+
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
+
     @Autowired
     DatabaseRepository dbrepo;
 
@@ -33,8 +39,6 @@ public class DatabaseService {
     }
     
 
-
-
     public String deleteDB(int id) {
 		String msg;
 		if(dbrepo.findById(id) != null) {
@@ -46,5 +50,4 @@ public class DatabaseService {
 		}
         return msg;
     }
-
 }
