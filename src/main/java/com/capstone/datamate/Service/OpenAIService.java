@@ -1,32 +1,21 @@
 package com.capstone.datamate.Service;
 
-import com.capstone.datamate.Entity.DatabaseEntity;
 import com.capstone.datamate.OpenAI.OpenAIInterface;
-import com.capstone.datamate.OpenAI.OpenAIRecords;
 import com.capstone.datamate.OpenAI.OpenAIRecords.OpenAIRequest;
 import com.capstone.datamate.OpenAI.OpenAIRecords.OpenAIResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import com.capstone.datamate.OpenAI.OpenAIRecords.Message;
-import com.capstone.datamate.OpenAI.OpenAIRecords;
-import org.springframework.web.client.RestTemplate;
-import org.json.JSONObject;
 
 import java.util.List;
-import java.util.Map;
 
-import static org.springframework.http.MediaType.*;
 
 @Service
 public class OpenAIService {
-    public static final String GPT_3_5_TURBO = "gpt-3.5-turbo";
-    public static final String GPT_4o_MINI = "gpt-4o-mini";
+    public static final String MODEL = "gpt-4o-mini";
     private final OpenAIInterface openAIInterface;
 
     @Value("${openai.api.key}")
@@ -39,15 +28,42 @@ public class OpenAIService {
         this.openAIInterface = openAIInterface;
     }
 
+    // Method to customize your request using preset values
     public OpenAIResponse getCompletion(OpenAIRequest request) {
         return openAIInterface.getCompletion(request);
     }
 
     public String getCompletion(String text) {
-        List<OpenAIRecords.Message> messages = List.of(new OpenAIRecords.Message("user", text));
-        OpenAIRequest request = new OpenAIRequest(GPT_4o_MINI, messages);
+
+        List<Message> messages = getMessages(text);
+
+        // Preset OpenAIRequest with system and user message
+        OpenAIRequest request = new OpenAIRequest(
+                MODEL,
+                messages,
+                0.7,                      // Temperature (preset value)
+                100,                      // Max tokens (preset value)
+                1,                        // Top P (preset value)
+                0,                        // Frequency penalty (preset value)
+                0                         // Presence penalty (preset value)
+        );
+
+        // Make the API call and get the response
         OpenAIResponse response = getCompletion(request);
         return response.choices().get(0).message().content();
     }
 
+    private static List<Message> getMessages(String text) {
+        String systemMessage = "You are a JSON assistant. Given an array of headers, return their associated " +
+                "input types. If a header likely represents an ID or primary key, return 'ID'. Examples: " +
+                "Input: company_id, username, birthdate, salary, profile_url, hasCompletedTraining. Output: " +
+                "ID, text, date, number, url, checkbox.";
+
+        // Messages list includes both system message and user message
+        return List.of(
+                new Message("system", systemMessage),  // System instruction
+                new Message("user", text)  // User input (headers)
+        );
+    }
 }
+

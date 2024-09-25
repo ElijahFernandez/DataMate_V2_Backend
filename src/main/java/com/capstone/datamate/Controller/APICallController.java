@@ -23,7 +23,7 @@ public class APICallController {
     }
 
     @PostMapping("/api/headers")
-    public String callAPIWithHeaders(@RequestBody List<String> headers){
-        return service.callAPIWithHeaders(headers);
+    public String processHeaders (@RequestBody List<String> headers){
+        return service.processHeaders (headers);
     }
 }
