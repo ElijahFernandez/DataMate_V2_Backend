@@ -28,6 +28,18 @@ public class APICallService {
         return service.getCompletion(prompt);
     }
 
+    public String callAPIforSQLReport(List<String> headers, String dbName, String tblName) {
+        String headersString = String.join(",", headers);
+        String prompt = String.format(
+                "%s" +
+                "Given the headers above, as well as the database name: %s" +
+                "And the table name: %s" +
+                "Give me SQL code for retrieving the data from those headers." +
+                "Do not include anything else in your response. Just the SQL code.", headersString, dbName, tblName);
+
+        return service.getCompletion(prompt);
+    }
+
 //    public String callAPIWithHeaders(List<String> headers) throws IOException {
 //        String headersString = String.join(", ", headers);
 //        String question = "These are SQL Headers:\n\n"

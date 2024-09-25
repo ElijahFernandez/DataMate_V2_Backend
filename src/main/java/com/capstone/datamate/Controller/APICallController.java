@@ -1,5 +1,6 @@
 package com.capstone.datamate.Controller;
 
+import com.capstone.datamate.Entity.ReportRequest;
 import com.capstone.datamate.Service.APICallService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -25,5 +26,10 @@ public class APICallController {
     @PostMapping("/api/headers")
     public String callAPIWithHeaders(@RequestBody List<String> headers){
         return service.callAPIWithHeaders(headers);
+    }
+
+    @PostMapping("/api/reports")
+    public String callAPIForReports(@RequestBody ReportRequest reportRequest) {
+        return service.callAPIforSQLReport(reportRequest.getHeaders(), reportRequest.getDbName(), reportRequest.getTblName());
     }
 }
