@@ -37,10 +37,10 @@ public class APICallService {
         String headersString = String.join(",", headers);
         String prompt = String.format(
                 "%s" +
-                "Given the headers above, as well as the database name: %s" +
+                "Given the headers above" +
                 "And the table name: %s" +
                 "Give me SQL code for retrieving the data from those headers." +
-                "Do not include anything else in your response. Just the SQL code.", headersString, dbName, tblName);
+                "Do not include anything else in your response. Just the SQL code. Don't cover the code in ``` tags.", headersString, tblName);
 
         return service.getCompletion(prompt);
     }

@@ -28,22 +28,21 @@ public class ReportEntity {
 
     @Setter
     @Getter
-    @Column
+    @Column(name = "report_code")
     private String reportCode;
 
     @Setter
     @Getter
-    @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "userId")
-    UserEntity user;
+    @Column(name = "user_id")
+    private int userId;  // Changed from UserEntity to int for user_id
 
     public ReportEntity(){}
 
-    public ReportEntity(int reportId, String reportName, String reportCode, UserEntity user) {
+    public ReportEntity(int reportId, String reportName, String reportCode, int userId) {
         this.reportId = reportId;
         this.reportName = reportName;
         this.reportCode = reportCode;
-        this.user = user;
+        this.userId = userId;
     }
 
 }
