@@ -38,9 +38,15 @@
 		</dependency>
 
 		<!-- MySQL Connector for database connectivity -->
+<!--		<dependency>-->
+<!--			<groupId>com.mysql</groupId>-->
+<!--			<artifactId>mysql-connector-j</artifactId>-->
+<!--			<scope>runtime</scope>-->
+<!--		</dependency>-->
 		<dependency>
 			<groupId>com.mysql</groupId>
 			<artifactId>mysql-connector-j</artifactId>
+			<version>8.2.0</version>  <!-- or the latest version -->
 			<scope>runtime</scope>
 		</dependency>
 
@@ -71,13 +77,16 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-webflux</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>org.springframework.web</groupId>
-			<artifactId>spring-web</artifactId>
-		</dependency>
+
 		<dependency>
 			<groupId>org.springframework</groupId>
-			<artifactId>spring-web-client</artifactId>
+			<artifactId>spring-web</artifactId>
+			<version>6.1.6</version> <!-- or omit version if using Spring Boot's parent -->
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-webflux</artifactId>
 		</dependency>
 
 		<dependency>
