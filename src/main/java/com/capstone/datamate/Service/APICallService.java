@@ -33,14 +33,14 @@ public class APICallService {
         return service.getCompletion(headersString);
     }
 
-    public String callAPIforSQLReport(List<String> headers, String dbName, String tblName) {
+    public String callAPIforSQLReport(List<String> headers, String dbName, String tblName, String addPrompt) {
         String headersString = String.join(",", headers);
         String prompt = String.format(
                 "%s" +
                 "Given the headers above" +
                 "And the table name: %s" +
-                "Give me SQL code for retrieving the data from those headers." +
-                "Do not include anything else in your response. Just the SQL code. Don't cover the code in ``` tags.", headersString, tblName);
+                "Give me SQL code for retrieving the data from those headers as well as the user's request from this additional prompt: %s." +
+                "Do not include anything else in your response. Just the SQL code. Don't cover the code in ``` tags.", headersString, tblName, addPrompt);
 
         return service.getCompletion(prompt);
     }

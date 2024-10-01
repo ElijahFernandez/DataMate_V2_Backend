@@ -81,4 +81,15 @@ public class ReportService {
             throw new RuntimeException("Unexpected error: " + e.getMessage(), e);
         }
     }
+
+    public ReportEntity setReportName(int reportId, String newReportName) {
+        Optional<ReportEntity> reportOpt = reportRepo.findById(reportId); // Fetch the report by ID
+        if (reportOpt.isPresent()) {
+            ReportEntity report = reportOpt.get();
+            report.setReportName(newReportName); // Set the new report name
+            return reportRepo.save(report); // Save the updated report entity
+        } else {
+            throw new RuntimeException("Report ID " + reportId + " not found.");
+        }
+    }
 }

@@ -30,6 +30,6 @@ public class APICallController {
 
     @PostMapping("/api/reports")
     public String callAPIForReports(@RequestBody ReportRequest reportRequest) {
-        return service.callAPIforSQLReport(reportRequest.getHeaders(), reportRequest.getDbName(), reportRequest.getTblName());
+        return service.callAPIforSQLReport(reportRequest.getHeaders(), reportRequest.getDbName(), reportRequest.getTblName(), reportRequest.getAddPrompt());
     }
 }
