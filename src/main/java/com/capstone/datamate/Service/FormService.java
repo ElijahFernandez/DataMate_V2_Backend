@@ -68,6 +68,30 @@ public class FormService {
         return formRepo.findHeadersByFormId(formId);
     }
 
+    public String getCustomSettingsByFormId(int formId) {
+        return formRepo.findCustomSettingsByFormID((formId));
+    }
+
+    public boolean updateCustomSettingsByFormId(int formId, String newCustomSettings) {
+        FormEntity form = formRepo.findById(formId).orElse(null);
+        if (form != null) {
+            form.setCustomSettings(newCustomSettings);  // Update the customSettings field
+            formRepo.save(form);  // Save the updated form
+            return true;
+        }
+        return false;
+    }
+
+    public boolean deleteCustomSettingsByFormId(int formId) {
+        FormEntity form = formRepo.findById(formId).orElse(null);
+        if (form != null) {
+            form.setCustomSettings(null);  // Set customSettings to null to "delete" it
+            formRepo.save(form);  // Save the updated form
+            return true;
+        }
+        return false;
+    }
+
     // Execute a raw SQL query (e.g., based on report code or custom query)
     public List<Map<String, Object>> executeSQLQuery(String sqlQuery) {
         try {

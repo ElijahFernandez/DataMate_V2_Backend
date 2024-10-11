@@ -27,6 +27,11 @@ public class FormEntity {
 
     @Setter
     @Getter
+    @Column(name = "tbl_name")
+    private String tblName;
+
+    @Setter
+    @Getter
     @Column(name = "form_name")
     private String formName;
 

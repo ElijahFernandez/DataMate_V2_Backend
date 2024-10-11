@@ -25,4 +25,9 @@ public interface FormRepository extends JpaRepository<FormEntity, Integer> {
     // Query to find all headers by formId
     @Query("SELECT f.headers FROM FormEntity f WHERE f.formId = :formId")
     String findHeadersByFormId(@Param("formId") int formId);
+
+    @Query("SELECT f.customSettings FROM FormEntity f WHERE f.formId = :formId")
+    String findCustomSettingsByFormID(@Param("formId") int formId);
+
+        // Spring Data JPA will automatically provide findById based on formId
 }
