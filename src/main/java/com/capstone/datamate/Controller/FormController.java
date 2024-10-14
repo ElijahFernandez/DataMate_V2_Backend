@@ -112,4 +112,39 @@ public class FormController {
                     .body("An error occurred while processing the request: " + e.getMessage());
         }
     }
+
+    @GetMapping("/getCustomSettingsByFormId/{formId}")
+    public ResponseEntity<?> getCustomSettingsByFormId(@PathVariable int formId) {
+        String customSettings = formServ.getCustomSettingsByFormId(formId);
+        if (customSettings != null) {
+            return ResponseEntity.ok(customSettings);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("Headers not found for Form ID: " + formId);
+        }
+    }
+
+    // Update custom settings
+    @PostMapping("/updateCustomSettingsByFormId/{formId}")
+    public ResponseEntity<?> updateCustomSettingsByFormId(@PathVariable int formId, @RequestBody String newCustomSettings) {
+        boolean isUpdated = formServ.updateCustomSettingsByFormId(formId, newCustomSettings);
+        if (isUpdated) {
+            return ResponseEntity.ok("Custom settings updated successfully for Form ID: " + formId);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("Form ID " + formId + " not found or update failed.");
+        }
+    }
+    // Delete Custom Settings
+    @DeleteMapping("/deleteCustomSettingsByFormId/{formId}")
+    public ResponseEntity<?> deleteCustomSettingsByFormId(@PathVariable int formId) {
+        boolean isDeleted = formServ.deleteCustomSettingsByFormId(formId);
+        if (isDeleted) {
+            return ResponseEntity.ok("Custom settings deleted successfully for Form ID: " + formId);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("Form ID " + formId + " not found or delete failed.");
+        }
+    }
+
 }
