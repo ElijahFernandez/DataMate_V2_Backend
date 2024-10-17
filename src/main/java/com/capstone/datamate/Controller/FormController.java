@@ -147,4 +147,15 @@ public class FormController {
         }
     }
 
+    // Endpoint to update form name by formId
+    @PostMapping("/updateFormName/{formId}")
+    public ResponseEntity<?> updateFormName(@PathVariable int formId, @RequestBody String newFormName) {
+        boolean isUpdated = formServ.updateFormNameByFormId(formId, newFormName);
+        if (isUpdated) {
+            return ResponseEntity.ok("Form name updated successfully for Form ID: " + formId);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("Form ID " + formId + " not found or update failed.");
+        }
+    }
 }

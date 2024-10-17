@@ -111,4 +111,15 @@ public class FormService {
             throw new RuntimeException("Unexpected error: " + e.getMessage(), e);
         }
     }
+
+    public boolean updateFormNameByFormId(int formId, String newFormName) {
+        FormEntity form = formRepo.findById(formId).orElse(null);
+        if (form != null) {
+            form.setFormName(newFormName);  // Update the form name field
+            formRepo.save(form);  // Save the updated form
+            return true;
+        }
+        return false;
+    }
+
 }
