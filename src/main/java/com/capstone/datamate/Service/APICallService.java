@@ -37,11 +37,20 @@ public class APICallService {
         String headersString = String.join(",", headers);
         String prompt = String.format(
                 "%s" +
-                "Given the headers above" +
-                "And the table name: %s" +
-                "Give me SQL code for retrieving the data from those headers as well as the user's request from this additional prompt: %s." +
-                "Do not include anything else in your response. Just the SQL code. Don't cover the code in ``` tags.", headersString, tblName, addPrompt);
+                        "Given the headers above" +
+                        "And the table name: %s" +
+                        "Generate SQL code for retrieving the data from those headers as well as fulfilling the user's request from this additional prompt: %s." +
+                        "If any header contains monetary symbols (like $, ¥, or ₱), treat the column as numerical only in the aggregation step. " +
+                        "Use the REPLACE function to remove money signs and commas when aggregating, but keep the original format in the retrieved data." +
+                        "Analyze the headers to determine which columns can be aggregated and add a summary row at the bottom showing the total aggregation for relevant numerical columns." +
+                        "Ensure the original data is displayed once, and the totals row is appended without duplicating data. Avoid using explicit UNION ALL." +
+                        "Provide fully executable MySQL code without additional formatting like ``` tags.",
+                headersString, tblName, addPrompt);
 
         return service.getCompletion(prompt);
     }
+
+
+
+
 }
