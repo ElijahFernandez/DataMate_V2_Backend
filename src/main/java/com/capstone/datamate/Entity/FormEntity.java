@@ -37,6 +37,11 @@ public class FormEntity {
 
     @Setter
     @Getter
+    @Column(name = "form_type")
+    private String formType;
+
+    @Setter
+    @Getter
     @Column(name = "headers")
     private String headers;  // Assuming this is a JSON or comma-separated string
 

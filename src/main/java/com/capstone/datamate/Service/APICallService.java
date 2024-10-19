@@ -37,14 +37,18 @@ public class APICallService {
         String headersString = String.join(",", headers);
         String prompt = String.format(
                 "%s" +
-                        "Given the headers above" +
-                        "And the table name: %s" +
-                        "Generate SQL code for retrieving the data from those headers as well as fulfilling the user's request from this additional prompt: %s." +
-                        "If any header contains monetary symbols (like $, ¥, or ₱), treat the column as numerical only in the aggregation step. " +
-                        "Use the REPLACE function to remove money signs and commas when aggregating, but keep the original format in the retrieved data." +
-                        "Analyze the headers to determine which columns can be aggregated and add a summary row at the bottom showing the total aggregation for relevant numerical columns." +
-                        "Ensure the original data is displayed once, and the totals row is appended without duplicating data. Avoid using explicit UNION ALL." +
-                        "Provide fully executable MySQL code without additional formatting like ``` tags.",
+                        "Given the headers above, " +
+                        "and the table name: %s, " +
+                        "and this additional prompt from the user: %s." +
+                        "First, generate a SELECT statement that retrieves data based on the provided headers and the additional prompt." +
+                        "Next, analyze the headers to determine if any of them are numerical in nature." +
+                        "If any header is numerical, move on to the next step; if none are numerical, the SQL generation should return only the original SELECT statement without any aggregation functions or total rows." +
+                        "If any header is numerical, treat the data as numerical and use the REPLACE function to remove money signs and commas for proper aggregation." +
+                        "The only aggregation functions that should be used are TOTAL and SUM." +
+                        "Then, generate another SELECT statement that creates a 'Total' row, which includes the aggregation of the relevant numerical columns, starting with the row header 'Total'." +
+                        "Finally, combine the two SELECT statements using UNION ALL." +
+                        "The SQL query must be written in a single line, with no unnecessary spaces or line breaks." +
+                        "Do not include anything else in your response. Just the SQL code. Do not use ``` tags around the code.",
                 headersString, tblName, addPrompt);
 
         return service.getCompletion(prompt);

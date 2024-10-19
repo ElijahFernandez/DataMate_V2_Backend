@@ -2,10 +2,11 @@
 //
 //import java.util.List;
 //
-//public class InsertValuesRequest {
+//public class UpdateValuesRequest {
 //    private String tableName;
 //    private List<String> headers;
 //    private List<String> values;
+//    private String conditions; // For specifying conditions like "id = 1"
 //
 //    public String getTableName() {
 //        return tableName;
@@ -30,4 +31,13 @@
 //    public void setValues(List<String> values) {
 //        this.values = values;
 //    }
+//
+//    public String getConditions() {
+//        return conditions;
+//    }
+//
+//    public void setConditions(String conditions) {
+//        this.conditions = conditions;
+//    }
 //}
+//

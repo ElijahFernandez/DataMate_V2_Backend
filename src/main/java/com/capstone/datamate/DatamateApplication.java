@@ -6,7 +6,7 @@ import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
 @ComponentScan(basePackages = "com.capstone.datamate")
-public class    DatamateApplication {
+public class DatamateApplication {
     public static void main(String[] args) {
         SpringApplication.run(DatamateApplication.class, args);
     }
