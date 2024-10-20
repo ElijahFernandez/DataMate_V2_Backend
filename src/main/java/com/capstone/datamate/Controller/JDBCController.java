@@ -24,8 +24,18 @@ public class JDBCController {
     // }
 
     @PostMapping("/convert")
-    public void executeSQL(@RequestBody SqlRequestEntity sql){
-        jdbc.executeSQL(sql.getTblName(), sql.getVals(), sql.getOperation());
+    public void executeSQL(@RequestBody SqlRequestEntity sqlRequest) {
+        System.out.println("Received SQL Request");
+
+        String sqlCode = sqlRequest.getSqlCode();
+        if (sqlCode != null && !sqlCode.isEmpty()) {
+            System.out.println("Executing SQL Code: " + sqlCode);
+            jdbc.executeSQL(sqlCode);
+            System.out.println("SQL Code executed successfully");
+        } else {
+            System.out.println("SQL Code is null or empty, throwing exception");
+            throw new IllegalArgumentException("SQL code must not be null or empty");
+        }
     }
 
     @GetMapping("/columns")

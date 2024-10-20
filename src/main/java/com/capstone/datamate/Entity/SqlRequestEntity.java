@@ -1,44 +1,23 @@
 package com.capstone.datamate.Entity;
 
-
 public class SqlRequestEntity {
-    private String tblName;
-    private String vals;
-    private int operation;
+    private String sqlCode;
 
-    public SqlRequestEntity(String tblName, String vals, int operation) {
-        this.tblName = tblName;
-        this.vals = vals;
-        this.operation = operation;
+    // Default constructor
+    public SqlRequestEntity() {
     }
 
-    public String getTblName() {
-        return tblName;
+    // Constructor with sqlCode parameter
+    public SqlRequestEntity(String sqlCode) {
+        this.sqlCode = sqlCode;
     }
 
-    public void setTblName(String tblName) {
-        this.tblName = tblName;
+    // Getter and Setter
+    public String getSqlCode() {
+        return sqlCode;
     }
 
-    public String getVals() {
-        return vals;
+    public void setSqlCode(String sqlCode) {
+        this.sqlCode = sqlCode;
     }
-
-    public void setVals(String vals) {
-        this.vals = vals;
-    }
-
-    public int getOperation() {
-        return operation;
-    }
-
-    public void setOperation(int operation) {
-        this.operation = operation;
-    }
-
-    
-
-    
-
-    
 }

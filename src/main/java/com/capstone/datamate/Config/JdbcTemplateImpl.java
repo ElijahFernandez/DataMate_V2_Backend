@@ -33,19 +33,26 @@ public class JdbcTemplateImpl{
         this.jdbc = new JdbcTemplate(dataSource);
     }
 
-    public void executeSQL(String tblName, String strValues, int op) throws DataAccessException{
-        String sqlStatement = "";
-        //op = 1 for CREATE
-        //op = 2 for INSERT
-        if(op == 1){
-            sqlStatement = "CREATE TABLE IF NOT EXISTS " + tblName + " " + strValues;
-        }else if(op == 2){
-            sqlStatement = "INSERT INTO " + tblName + " " + strValues;
-        }
-        if(!sqlStatement.equals("")){
-            jdbc.execute(sqlStatement);
+    public void executeSQL(String sqlCode) throws DataAccessException {
+        System.out.println("Received SQL Code for execution");
+
+        if (sqlCode != null && !sqlCode.isEmpty()) {
+            // Split the SQL commands by semicolon and trim any whitespace
+            String[] sqlStatements = sqlCode.split(";");
+            for (String sql : sqlStatements) {
+                sql = sql.trim(); // Remove leading and trailing whitespace
+                if (!sql.isEmpty()) { // Ensure we don't execute empty statements
+                    System.out.println("Executing SQL: " + sql);
+                    jdbc.execute(sql);
+                    System.out.println("SQL executed successfully: " + sql);
+                }
+            }
+        } else {
+            System.out.println("SQL Code is empty, skipping execution");
         }
     }
+
+
     public List<String> getColumnHeaders(String tableName) {
         String query = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = ?";
         return jdbc.queryForList(query, new Object[]{tableName}, String.class);
