@@ -3,7 +3,12 @@ HELP.md
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
-!**/src/main/resources/application.properties
+
+# Ignore application.properties
+/src/main/resources/application.properties
+
+# Do not ignore the template file
+!/src/main/resources/application-template.properties
 
 ### STS ###
 .apt_generated
@@ -32,4 +37,3 @@ build/
 
 ### VS Code ###
 .vscode/
-src/main/resources/application.properties
