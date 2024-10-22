@@ -4,10 +4,10 @@ HELP.md
 !**/src/main/**/target/
 !**/src/test/**/target/
 
-# Ignore application-template.properties
+
 !/src/main/resources/application.properties
 
-
+# Ignore application-template.properties
 /src/main/resources/application-template.properties
 
 ### STS ###
