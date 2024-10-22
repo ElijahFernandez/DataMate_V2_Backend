@@ -4,11 +4,11 @@ HELP.md
 !**/src/main/**/target/
 !**/src/test/**/target/
 
-# Ignore application.properties
-/src/main/resources/application.properties
+# Ignore application-template.properties
+!/src/main/resources/application.properties
 
-# Do not ignore the template file
-!/src/main/resources/application-template.properties
+
+/src/main/resources/application-template.properties
 
 ### STS ###
 .apt_generated
